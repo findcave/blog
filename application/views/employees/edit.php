@@ -30,16 +30,16 @@
             <span class="text-danger"> <?php echo form_error('email'); ?> </span>
         </div>
 
+        <?php if(!empty($employee)) { $dept = $employee->departmentid ;}else {$dept = set_value('department') ; } ?>
+
         <div class="form-group">
             <label for="department">Department</label>
             <select class="form-control" id="department" name="department" >
                 <option value="">Select</option>
                 <?php foreach ($departments as $department) {?>
-                    <option <?php echo set_select('department', $department->id); ?> value="<?php echo $department->id ; ?>"><?php echo $department->name; ?></option>
+                    <option <?php if($dept == $department->id){ echo "selected" ; } ?> value="<?php echo $department->id ; ?>"><?php echo $department->name; ?></option>
                 <?php }?>
             </select>
-
-
             <span class="text-danger"> <?php echo form_error('department'); ?> </span>
         </div>
 

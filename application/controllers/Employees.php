@@ -15,6 +15,11 @@ class Employees extends CI_Controller
     {
 
         $data['employees'] = $this->employee->get_all_item('employee');
+        $data["channels"] =array();
+        foreach($data["employees"] as $val)
+        {
+            $data["departments"][] = $this->employee->get_one_item('department','id',$val->departmentid);
+        }
 
         $data['page'] = 'employees/index';
         $this->load->view('employees/page', $data);

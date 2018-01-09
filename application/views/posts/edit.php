@@ -24,18 +24,18 @@
             <span class="text-danger"> <?php echo form_error('description'); ?> </span>
         </div>
 
+        <?php if(!empty($post)) { $ch = $post->channelid ;}else {$ch = set_value('channel') ; } ?>
+
         <div class="form-group">
             <label for="channel">Channel</label>
             <select class="form-control" id="channel" name="channel" >
                 <option value="">Select</option>
                 <?php foreach ($channels as $channel) {?>
-                    <option <?php echo set_select('channel', $channel->id); ?> value="<?php echo $channel->id ; ?>" ><?php echo $channel->name; ?></option>
+                    <option <?php if($ch == $channel->id){ echo "selected" ; } ?> value="<?php echo $channel->id ; ?>" ><?php echo $channel->name; ?></option>
                 <?php }?>
             </select>
             <span class="text-danger"> <?php echo form_error('channel'); ?> </span>
-
         </div>
-
         <button type="submit" class="btn btn-primary">Update</button>
         <a href="<?php echo base_url();?>posts" class="btn btn-light">Cancel</a>
     </form>

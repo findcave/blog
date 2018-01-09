@@ -22,14 +22,13 @@
         </thead>
         <tbody>
         <?php
-        foreach ($employees as $employee) {
-            $department = $this->employee->get_one_item('department','id',$employee->departmentid);
+        foreach ($employees as $key=>$employee) {
             ?>
             <tr>
                 <td><?php echo $employee->name ;?></td>
                 <td><?php echo $employee->phone ;?></td>
                 <td><?php echo $employee->email ;?></td>
-                <td><?php echo $department->name ;?></td>
+                <td><?php echo $departments[$key]->name ;?></td>
 
                 <td><?php echo ($employee->status == 1) ? 'Active' : 'Inactive'; ?></td>
                 <td>

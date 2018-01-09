@@ -21,14 +21,15 @@
         </tr>
         </thead>
         <tbody>
-        <?php foreach ($posts as $post) {
-            $channel = $this->post->get_one_item('channel','id',$post->channelid);
+        <?php
+         foreach ($posts as $key=>$post) {
+
 
             ?>
             <tr>
                 <td><?php echo $post->title ;?></td>
                 <td><?php echo $post->description ;?></td>
-                <td><?php echo $channel->name ;?></td>
+                <td><?php echo $channels[$key]->name ;?></td>
                 <td><?php echo $post->created_at ;?></td>
 
                 <td><?php echo ($post->status == 1) ? 'active' : 'inactive'; ?></td>

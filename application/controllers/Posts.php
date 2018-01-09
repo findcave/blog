@@ -14,6 +14,13 @@ class Posts extends CI_Controller
     {
 
         $data['posts'] = $this->post->get_all_item('posts');
+        $data["channels"] =array();
+
+        foreach($data["posts"] as $val)
+        {
+            $data["channels"][] = $this->post->get_one_item('channel','id',$val->channelid);
+        }
+
 
         $data['page'] = 'posts/index';
         $this->load->view('posts/page', $data);
@@ -46,7 +53,7 @@ class Posts extends CI_Controller
             $checked = $this->input->post('status');
             if(isset($checked) == 1)
             {
-               $status = 1 ;
+                $status = 1 ;
             }
             else
             {
