@@ -25,10 +25,20 @@
 
 
             <div class="form-group">
-                <label for="name">Location</label>
+                <label for="location">Location</label>
                 <input type="text" class="form-control" id="location" value="<?php echo $department->location ;?>" name="location"  >
                 <span class="text-danger"> <?php echo form_error('location'); ?> </span>
             </div>
+
+            <div class="form-check">
+                <input class="form-check-input" <?php if($department->status  == 1) { echo "checked" ; }?> type="checkbox" value="" id="status" name="status">
+                <label class="form-check-label" for="status">
+                    Active Department ?
+                </label>
+            </div>
+
+            <hr>
+
 
             <button type="submit" class="btn btn-primary">Update</button>
             <a href="<?php echo base_url();?>channels" class="btn btn-light">Cancel</a>

@@ -39,6 +39,7 @@ class Posts extends CI_Controller
         $this->form_validation->set_rules('title', 'Title', 'trim|required');
         $this->form_validation->set_rules('description', 'Description', 'trim|required');
         $this->form_validation->set_rules('channel', 'Channel', 'trim|required');
+        $this->form_validation->set_rules('slug', 'Slug', 'trim|required');
 
         if ($this->form_validation->run() == FALSE) {
 
@@ -53,7 +54,7 @@ class Posts extends CI_Controller
             $checked = $this->input->post('status');
             if(isset($checked) == 1)
             {
-                $status = 1 ;
+               $status = 1 ;
             }
             else
             {
@@ -106,11 +107,14 @@ class Posts extends CI_Controller
             $title = trim($this->security->xss_clean($this->input->post('title')));
             $description = trim($this->security->xss_clean($this->input->post('description')));
             $channel = trim($this->security->xss_clean($this->input->post('channel')));
+            $checked = $this->input->post('status');
+            if(isset($checked) == 1)  { $status = 1 ;  } else { $status = 0; }
 
             $data = array(
                 'title' => $title,
                 'description' => $description,
                 'channelid' => $channel,
+                'status' => $status,
             );
             $flag = $this->post->update_one_item($id, 'id', 'posts', $data);
             if ($flag) {

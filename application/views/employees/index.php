@@ -39,12 +39,12 @@
                         <button type="submit" class="btn btn-link btn-sm">Delete</button>
                     </form>
 
-                    <form action="<?php echo base_url();?>employees/changeStatus/<?php echo $employee->id ;?>" method="post">
-                        <input type="hidden" name="status" value="<?php echo $employee->status ;?>">
-                        <button type="submit" class="btn btn-link btn-sm" >
-                            <?php echo ($employee->status == 1) ? 'Deactivate' : 'Activate'; ?>
-                        </button>
-                    </form>
+                    <!--                    <form action="--><?php //echo base_url();?><!--employees/changeStatus/--><?php //echo $employee->id ;?><!--" method="post">-->
+                    <!--                        <input type="hidden" name="status" value="--><?php //echo $employee->status ;?><!--">-->
+                    <!--                        <button type="submit" class="btn btn-link btn-sm" >-->
+                    <!--                            --><?php //echo ($employee->status == 1) ? 'Deactivate' : 'Activate'; ?>
+                    <!--                        </button>-->
+                    <!--                    </form>-->
                     </div>
                 </td>
             </tr>

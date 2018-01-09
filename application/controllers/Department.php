@@ -82,13 +82,12 @@ class Department extends CI_Controller
     {
         $this->form_validation->set_rules('name', 'Name', 'trim|required');
         $this->form_validation->set_rules('description', 'Description', 'trim|required');
-        $location = trim($this->security->xss_clean($this->input->post('location')));
+        $this->form_validation->set_rules('location', 'Location', 'trim|required');
 
         if ($this->form_validation->run() == FALSE) {
 
 
             $data['department'] = $this->departments->get_one_item('department', 'id', $id);
-
             $data['page'] = 'department/edit';
             $this->load->view('department/page', $data);
 
@@ -96,11 +95,14 @@ class Department extends CI_Controller
             $name = trim($this->security->xss_clean($this->input->post('name')));
             $description = trim($this->security->xss_clean($this->input->post('description')));
             $location = trim($this->security->xss_clean($this->input->post('location')));
+            $checked = $this->input->post('status');
+            if(isset($checked) == 1) {  $status = 1 ; } else { $status = 0 ;   }
 
             $data = array(
                 'name' => $name,
                 'description' => $description,
                 'location' => $location,
+                'status' => $status,
             );
             $flag = $this->departments->update_one_item($id, 'id', 'department', $data);
             if ($flag) {

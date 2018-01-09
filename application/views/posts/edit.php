@@ -36,6 +36,16 @@
             </select>
             <span class="text-danger"> <?php echo form_error('channel'); ?> </span>
         </div>
+
+        <div class="form-check">
+            <input class="form-check-input" <?php if(!empty($post)){ if($post->status  == 1) { echo "checked" ; } }?> type="checkbox" value="" id="status" name="status">
+            <label class="form-check-label" for="status">
+                Active Post ?
+            </label>
+        </div>
+
+        <hr>
+
         <button type="submit" class="btn btn-primary">Update</button>
         <a href="<?php echo base_url();?>posts" class="btn btn-light">Cancel</a>
     </form>

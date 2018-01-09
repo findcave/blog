@@ -37,11 +37,20 @@
             <select class="form-control" id="department" name="department" >
                 <option value="">Select</option>
                 <?php foreach ($departments as $department) {?>
-                    <option <?php if($dept == $department->id){ echo "selected" ; } ?> value="<?php echo $department->id ; ?>"><?php echo $department->name; ?></option>
+                    <option <?php if($dept == $department->id){ echo "selected" ; } ?>  value="<?php echo $department->id ; ?>"><?php echo $department->name; ?></option>
                 <?php }?>
             </select>
             <span class="text-danger"> <?php echo form_error('department'); ?> </span>
         </div>
+
+        <div class="form-check">
+            <input class="form-check-input" <?php if(!empty($employee)){if($employee->status  == 1) { echo "checked" ; }}?> type="checkbox" value="" id="status" name="status">
+            <label class="form-check-label" for="status">
+                Active Employee ?
+            </label>
+        </div>
+
+        <hr>
 
 
         <button type="submit" class="btn btn-primary">Update</button>

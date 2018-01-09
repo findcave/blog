@@ -21,10 +21,7 @@
         </tr>
         </thead>
         <tbody>
-        <?php
-         foreach ($posts as $key=>$post) {
-
-
+        <?php foreach ($posts as $key=>$post) {
             ?>
             <tr>
                 <td><?php echo $post->title ;?></td>
@@ -32,7 +29,7 @@
                 <td><?php echo $channels[$key]->name ;?></td>
                 <td><?php echo $post->created_at ;?></td>
 
-                <td><?php echo ($post->status == 1) ? 'active' : 'inactive'; ?></td>
+                <td><?php echo ($post->status == 1) ? 'Active' : 'Inactive'; ?></td>
                 <td>
                       <div class="btn-group">
                             <a href="<?php echo base_url() ;?>posts/edit/<?php echo $post->id ;?>" class="btn btn-link btn-sm" >Edit</a>
@@ -41,12 +38,12 @@
                                 <button type="submit" class="btn btn-link btn-sm">Delete</button>
                             </form>
 
-                            <form action="<?php echo base_url();?>posts/changeStatus/<?php echo $post->id ;?>" method="post">
-                                <input type="hidden" name="status" value="<?php echo $post->status ;?>">
-                                <button type="submit" class="btn btn-link btn-sm" >
-                                    <?php echo ($post->status == 1) ? 'Deactivate' : 'Activate'; ?>
-                                </button>
-                            </form>
+                            <!--                            <form action="--><?php //echo base_url();?><!--posts/changeStatus/--><?php //echo $post->id ;?><!--" method="post">-->
+                            <!--                                <input type="hidden" name="status" value="--><?php //echo $post->status ;?><!--">-->
+                            <!--                                <button type="submit" class="btn btn-link btn-sm" >-->
+                            <!--                                    --><?php //echo ($post->status == 1) ? 'Deactivate' : 'Activate'; ?>
+                            <!--                                </button>-->
+                            <!--                            </form>-->
                       </div>
                 </td>
             </tr>

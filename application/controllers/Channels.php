@@ -76,25 +76,28 @@ class Channels extends CI_Controller
 
     public function update()
     {
-        $id =  trim($this->security->xss_clean($this->input->post('id')));
+         $id =  trim($this->security->xss_clean($this->input->post('id')));
 
         $this->form_validation->set_rules('name', 'Name', 'trim|required');
         $this->form_validation->set_rules('description', 'Description', 'trim|required');
         $this->form_validation->set_rules('id', 'ID', 'trim|required');
 
-        if ($this->form_validation->run() == FALSE) {
+        if($this->form_validation->run() == FALSE) {
 
             $data['page'] = 'channels/edit';
             $data['channel'] = '';
             $this->load->view('channels/page', $data);
 
-        } else {
+        }
+        else {
             $name = trim($this->security->xss_clean($this->input->post('name')));
             $description = trim($this->security->xss_clean($this->input->post('description')));
-
+            $checked = $this->input->post('status');
+            if(isset($checked) == 1) {  $status = 1 ; } else { $status = 0 ;   }
             $data = array(
                 'name' => $name,
                 'description' => $description,
+                'status' => $status,
             );
             $flag = $this->channel->update_one_item($id, 'id', 'channel', $data);
             if ($flag) {

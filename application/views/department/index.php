@@ -36,12 +36,12 @@
                                 <button type="submit" class="btn btn-link btn-sm">Delete</button>
                             </form>
 
-                            <form action="<?php echo base_url();?>department/changeStatus/<?php echo $department->id ;?>" method="post">
-                                <input type="hidden" name="status" value="<?php echo $department->status ;?>">
-                                <button type="submit" class="btn btn-link btn-sm" >
-                                    <?php echo ($department->status == 1) ? 'Deactivate' : 'Activate'; ?>
-                                </button>
-                            </form>
+                            <!--                            <form action="--><?php //echo base_url();?><!--department/changeStatus/--><?php //echo $department->id ;?><!--" method="post">-->
+                            <!--                                <input type="hidden" name="status" value="--><?php //echo $department->status ;?><!--">-->
+                            <!--                                <button type="submit" class="btn btn-link btn-sm" >-->
+                            <!--                                    --><?php //echo ($department->status == 1) ? 'Deactivate' : 'Activate'; ?>
+                            <!--                                </button>-->
+                            <!--                            </form>-->
                         </div>
                     </td>
 

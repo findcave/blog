@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 08, 2018 at 06:32 PM
+-- Generation Time: Jan 09, 2018 at 05:09 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -39,11 +39,10 @@ CREATE TABLE `channel` (
 --
 
 INSERT INTO `channel` (`id`, `name`, `description`, `status`, `created_at`) VALUES
-(3, 'javascript', 'dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a', 1, '2018-01-08 16:10:24'),
-(4, 'php', 's simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a', 1, '2018-01-07 13:21:38'),
-(9, 'Java', 't is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution o', 0, '2018-01-08 16:10:34'),
-(10, 'asp', 't is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distri', 1, '2018-01-08 16:12:46'),
-(12, 'andriod', 't is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to usin', 1, '2018-01-08 16:14:10');
+(1, 'php', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley', 1, '2018-01-09 14:10:08'),
+(2, 'Javascript', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley', 1, '2018-01-09 05:43:47'),
+(3, 'java', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley', 1, '2018-01-09 14:10:14'),
+(5, 'html', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley', 0, '2018-01-09 14:10:18');
 
 -- --------------------------------------------------------
 
@@ -65,11 +64,9 @@ CREATE TABLE `department` (
 --
 
 INSERT INTO `department` (`id`, `name`, `description`, `location`, `status`, `created_at`) VALUES
-(4, 'hr department', 't is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more', 'Thrissur', 1, '2018-01-08 16:05:33'),
-(5, 'programming', 't is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using', 'Poothole', 1, '2018-01-08 16:06:52'),
-(6, 'Designing', 't is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to', 'Palakkad', 0, '2018-01-08 16:08:28'),
-(7, 'seo', 'readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, somet', 'olari', 1, '2018-01-08 17:00:26'),
-(8, 'graphics', 'readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, somet', 'thrissur', 0, '2018-01-08 17:00:46');
+(1, 'HR', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley', 'Thrissur', 1, '2018-01-09 14:15:58'),
+(2, 'Programming', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley', 'Palakkad', 0, '2018-01-09 14:16:02'),
+(3, 'Designing', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley', 'west fort', 1, '2018-01-09 14:13:27');
 
 -- --------------------------------------------------------
 
@@ -91,7 +88,9 @@ CREATE TABLE `employee` (
 --
 
 INSERT INTO `employee` (`id`, `name`, `phone`, `email`, `departmentid`, `status`) VALUES
-(4, 'dhaya', '9544885554', 'dhayams01@gmail.com', 4, 1);
+(1, 'Dhaya', '9544885554', 'dhayams01@gmail.com', 3, 0),
+(2, 'Renish', '9544885551', 'renish@gmail.com', 3, 1),
+(4, 'kannan', '9544885554', 'ka@gmail.com', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -104,6 +103,8 @@ CREATE TABLE `posts` (
   `title` text NOT NULL,
   `description` text NOT NULL,
   `channelid` int(11) NOT NULL,
+  `slug` text NOT NULL,
+  `publishdate` datetime NOT NULL,
   `status` tinyint(4) NOT NULL COMMENT '1 as active, 0 as inactive',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -112,8 +113,9 @@ CREATE TABLE `posts` (
 -- Dumping data for table `posts`
 --
 
-INSERT INTO `posts` (`id`, `title`, `description`, `channelid`, `status`, `created_at`) VALUES
-(7, 'Php development', 't is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,', 10, 1, '2018-01-08 17:31:06');
+INSERT INTO `posts` (`id`, `title`, `description`, `channelid`, `slug`, `publishdate`, `status`, `created_at`) VALUES
+(1, 'SITEPOINT PHP', 'is a renowned name in the programming world for bringing valuable resources to coders. Be it how-to guides, courses or books; it is a treasure for learning PHP. Each post is manually reviewed by the Editor before it goes live. The posts on the website range from novice to the expert level. You will find articles on various topics related to PHP. Programmers across the world post their experiences of PHP,', 1, '', '0000-00-00 00:00:00', 1, '2018-01-09 14:35:36'),
+(2, 'html development', 'many of the features and topics that you might have missed when moving from HTML to HTML5. It also has a helpful element index that’s worth investigating in and of itself.', 5, '', '0000-00-00 00:00:00', 1, '2018-01-09 08:02:20');
 
 --
 -- Indexes for dumped tables
@@ -151,12 +153,12 @@ ALTER TABLE `posts`
 -- AUTO_INCREMENT for table `channel`
 --
 ALTER TABLE `channel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `department`
 --
 ALTER TABLE `department`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `employee`
 --
@@ -166,7 +168,7 @@ ALTER TABLE `employee`
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

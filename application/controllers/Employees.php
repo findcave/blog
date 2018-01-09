@@ -13,7 +13,6 @@ class Employees extends CI_Controller
 
     public function index()
     {
-
         $data['employees'] = $this->employee->get_all_item('employee');
         $data["channels"] =array();
         foreach($data["employees"] as $val)
@@ -23,8 +22,6 @@ class Employees extends CI_Controller
 
         $data['page'] = 'employees/index';
         $this->load->view('employees/page', $data);
-
-
     }
 
     public function create()
@@ -54,14 +51,7 @@ class Employees extends CI_Controller
             $email = trim($this->security->xss_clean($this->input->post('email')));
             $department = trim($this->security->xss_clean($this->input->post('department')));
             $checked = $this->input->post('status');
-            if(isset($checked) == 1)
-            {
-                $status = 1 ;
-            }
-            else
-            {
-                $status = 0 ;
-            }
+            if(isset($checked) == 1) { $status = 1; } else { $status = 0; }
 
             $datas = array(
                 'name' => $name,
@@ -112,13 +102,15 @@ class Employees extends CI_Controller
             $phone = trim($this->security->xss_clean($this->input->post('phone')));
             $email = trim($this->security->xss_clean($this->input->post('email')));
             $department = trim($this->security->xss_clean($this->input->post('department')));
+            $checked = $this->input->post('status');
+            if(isset($checked) == 1)  { $status = 1 ;  } else { $status = 0; }
 
             $datas = array(
                 'name' => $name,
                 'phone' => $phone,
                 'email' => $email,
                 'departmentid' => $department,
-                'status' => 1,
+                'status' => $status,
             );
 
             $flag = $this->employee->update_one_item($id, 'id', 'employee', $datas);
@@ -141,14 +133,7 @@ class Employees extends CI_Controller
     public function changeStatus($id)
     {
         $status = $this->input->post('status');
-        if($status == 1)
-        {
-            $data = array('status'=>0) ;
-        }
-        else
-        {
-            $data = array('status'=>1) ;
-        }
+        if($status == 1) { $data = array('status'=>0) ; } else { $data = array('status'=>1) ; }
 
         $flag = $this->employee->update_one_item($id, 'id', 'employee', $data);
 

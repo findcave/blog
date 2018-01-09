@@ -11,8 +11,14 @@
         <form name="registerform" action="<?php echo base_url(); ?>posts/store" method="post" >
             <div class="form-group">
                 <label for="title">Name</label>
-                <input type="text" class="form-control" id="title" value="<?php echo set_value('title') ;?>" name="title"  placeholder="Enter Title">
+                <input type="text" class="form-control" id="title" value="<?php echo set_value('title') ;?>" name="title">
                 <span class="text-danger"> <?php echo form_error('title'); ?> </span>
+            </div>
+
+            <div class="form-group">
+                <label for="slug">Slug</label>
+                <input type="text" class="form-control" id="slug" value="<?php echo set_value('slug') ;?>" name="slug"  >
+                <span class="text-danger"> <?php echo form_error('slug'); ?> </span>
             </div>
 
             <div class="form-group">
@@ -30,6 +36,16 @@
                     <?php }?>
                 </select>
                 <span class="text-danger"> <?php echo form_error('channel'); ?> </span>
+            </div>
+
+            <div class="form-group">
+                <label for="publishdate">Publishing Date</label>
+                <div class='input-group date' >
+                    <input type='date' class="form-control" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
             </div>
 
             <div class="form-check">
