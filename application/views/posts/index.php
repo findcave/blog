@@ -3,53 +3,32 @@
   <div class="col">
     <h3 class="text-info" style="display:inline">Posts</h3>
     <span class="float-right"> <a href="<?php echo base_url(); ?>posts/create" class="btn btn-success">New Post</a><br></span>
-
+  <hr>
   </div>
 </div>
 
 <div class="row">
-  <div class="col"><br>
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">Title</th>
-            <th scope="col" >Description</th>
-            <th scope="col" >Channel</th>
-            <th scope="col" >Published Date</th>
-            <th scope="col">Status</th>
-            <th scope="col">Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php foreach ($posts as $key=>$post) {
-            ?>
-            <tr>
-                <td><?php echo $post->title ;?></td>
-                <td><?php echo $post->description ;?></td>
-                <td><?php echo $channels[$key]->name ;?></td>
-                <td><?php echo $post->created_at ;?></td>
+  <div class="col">
+    <?php foreach ($posts as $key=>$post) {
+        ?>
+      
+    <div class="media">
+      <img class="mr-3" src="http://via.placeholder.com/100x100" alt="Generic placeholder image">
+      <div class="media-body">
+        <h4 class="mt-0"><?php echo $post->title ;?></h4>
+        <p>By <a href="#">John Doe</a>, Channels : <a href="#"><?php echo $channels[$key]->name ;?></a>, Published at 01 Jan 2018, <?php echo ($post->status == 1) ? 'Active' : 'Inactive'; ?> </p>
+        <p><?php echo $post->description ;?></p>
+        <div class="btn-group">
+              <a href="<?php echo base_url() ;?>posts/edit/<?php echo $post->id ;?>" class="btn btn-link btn-sm" >Edit</a>
 
-                <td><?php echo ($post->status == 1) ? 'Active' : 'Inactive'; ?></td>
-                <td>
-                      <div class="btn-group">
-                            <a href="<?php echo base_url() ;?>posts/edit/<?php echo $post->id ;?>" class="btn btn-link btn-sm" >Edit</a>
-
-                            <form action="<?php echo base_url();?>posts/destroy/<?php echo $post->id ;?>" method="post" class="form-inline">
-                                <button type="submit" class="btn btn-link btn-sm">Delete</button>
-                            </form>
-
-                            <!--                            <form action="--><?php //echo base_url();?><!--posts/changeStatus/--><?php //echo $post->id ;?><!--" method="post">-->
-                            <!--                                <input type="hidden" name="status" value="--><?php //echo $post->status ;?><!--">-->
-                            <!--                                <button type="submit" class="btn btn-link btn-sm" >-->
-                            <!--                                    --><?php //echo ($post->status == 1) ? 'Deactivate' : 'Activate'; ?>
-                            <!--                                </button>-->
-                            <!--                            </form>-->
-                      </div>
-                </td>
-            </tr>
-        <?php } ?>
-        </tbody>
-    </table>
+              <form action="<?php echo base_url();?>posts/destroy/<?php echo $post->id ;?>" method="post" class="form-inline">
+                  <button type="submit" class="btn btn-link btn-sm">Delete</button>
+              </form>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <?php } ?>
 
   </div>
 </div>

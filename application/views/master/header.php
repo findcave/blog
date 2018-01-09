@@ -14,6 +14,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     <!-- Bootstrap core CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+  
 
     <!-- Custom styles for this template -->
     <style rel="stylesheet">
@@ -37,9 +38,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <li class="nav-item active">
             <a class="nav-link" href="<?php echo base_url(); ?>">Home <span class="sr-only">(current)</span></a>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="nav-link" href="#">Link</a>
-          </li>
+          </li> -->
 
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle"  id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menu</a>
@@ -48,6 +49,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               <a class="dropdown-item" href="<?php echo base_url();?>department">Departments</a>
               <a class="dropdown-item" href="<?php echo base_url();?>employees">Employees</a>
               <a class="dropdown-item" href="<?php echo base_url();?>posts">Posts</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle"  id="channels" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Channels</a>
+            <div class="dropdown-menu" aria-labelledby="channels">
+              <a class="dropdown-item" href="#">PHP</a>
+              <a class="dropdown-item" href="#">CCS3</a>
+              <a class="dropdown-item" href="#">HTML5</a>
+              <a class="dropdown-item" href="#">jQuery</a>
             </div>
           </li>
         </ul>
