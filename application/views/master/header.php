@@ -38,6 +38,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <li class="nav-item active">
             <a class="nav-link" href="<?php echo base_url(); ?>">Home <span class="sr-only">(current)</span></a>
           </li>
+
+
           <!-- <li class="nav-item">
             <a class="nav-link" href="#">Link</a>
           </li> -->

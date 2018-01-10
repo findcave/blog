@@ -36,42 +36,51 @@ class Posts extends CI_Controller
 
     public function store()
     {
+
+
         $this->form_validation->set_rules('title', 'Title', 'trim|required');
         $this->form_validation->set_rules('description', 'Description', 'trim|required');
         $this->form_validation->set_rules('channel', 'Channel', 'trim|required');
-        $this->form_validation->set_rules('slug', 'Slug', 'trim|required');
+        $this->form_validation->set_rules('publishingdate', 'Publishing Date', 'required');
+        $this->form_validation->set_rules('slug', 'Slug', 'required');
 
-        if ($this->form_validation->run() == FALSE) {
+        $slug = trim($this->security->xss_clean($this->input->post('slug')));
+        $slug_value = $this->post->get_one_item('posts','slug',$slug);
+        if($slug_value)
+        {
+            $this->form_validation->set_rules('slug', 'Slug', 'unique');
+        }
+
+
+        if($this->form_validation->run() == FALSE){
 
             $data['channels'] = $this->post->get_one_items('channel','status',1);
             $data['page'] = 'posts/create';
             $this->load->view('posts/page', $data);
 
-        } else {
+        }else {
             $title = trim($this->security->xss_clean($this->input->post('title')));
             $description = trim($this->security->xss_clean($this->input->post('description')));
             $channel = trim($this->security->xss_clean($this->input->post('channel')));
+            $publishingdate = trim($this->security->xss_clean($this->input->post('publishingdate')));
+            $slug = trim($this->security->xss_clean($this->input->post('slug')));
             $checked = $this->input->post('status');
-            if(isset($checked) == 1)
-            {
-               $status = 1 ;
-            }
-            else
-            {
-                $status = 0 ;
-            }
+            if(isset($checked) == 1) { $status = 1; } else { $status = 0; }
 
             $datas = array(
                 'title' => $title,
                 'description' => $description,
                 'channelid' => $channel,
+                'slug' => $slug,
+                'publishdate' => $publishingdate,
                 'status' => $status,
             );
             $flag = $this->post->item_insert('posts', $datas);
-            if ($flag) {
+
+            if($flag){
                 $this->session->set_flashdata('toast_success', 'Post Added Successfully  !!!');
                 redirect('posts');
-            } else {
+            }else{
                 $this->session->set_flashdata('toast_error', 'Failed. Try Again !!!');
                 redirect('posts/create');
             }
@@ -157,5 +166,12 @@ class Posts extends CI_Controller
             redirect('posts');
         }
 
+    }
+
+    public function postexistence()
+    {
+        $slug = $this->input->post('sl');
+        $data = $this->post->get_one_item('posts','slug',$slug);
+        echo json_encode($data);
     }
 }
