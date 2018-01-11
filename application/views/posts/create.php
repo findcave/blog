@@ -63,37 +63,15 @@
 </div>
 
 
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript">   
 
-<script type="text/javascript">
-        $('body').on('keypress keyup','#title',function(){
 
-            var text = $('#title').val();
+$(function() {
 
-            var sl= text.toString().toLowerCase()
-                .replace(/\s+/g, '-')           // Replace spaces with -
-                .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
-                .replace(/\-\-+/g, '-')         // Replace multiple - with single -
-                .replace(/^-+/, '')             // Trim - from start of text
-                .replace(/-+$/, '');            // Trim - from end of text
-
-            $('#slug').val(sl);
-
-            $.ajax({
-                method: "post",
-                url: "<?php echo base_url();?>posts/postexistence",
-                data : {sl:sl},
-                dataType: "json",
-                success: function(data){
-
-                    $('#slugerror').html('');
-                    $('#slugerror').show();
-                },
-                error: function(){
-
-                }
-            });
-
-        });
+   $("#title").change(function(){
+        $("#slug").val(slugify(this.value));
+    });
+   
+});
 
 </script>
