@@ -62,13 +62,14 @@ class Auth extends CI_Controller
 
     public function signout()
     {
+
         unset(
         $_SESSION['userid'],
         $_SESSION['username'],
         $_SESSION['email'],
         $_SESSION['logged_in']
         );
-        session_destroy();
+        $this->session->sess_destroy();
         redirect('auth/');
 
     }
@@ -98,7 +99,12 @@ class Auth extends CI_Controller
             if($flag) {
                 $this->session->set_flashdata('toast_success', 'Changed Successfully !!!');
 
-                redirect('user');
+                if($this->session->userdata('userid') == 1){
+                    redirect('admin');
+                }else{
+                    redirect('user');
+                }
+
 
             } else {
                 $this->session->set_flashdata('toast_error', 'Failed. Try Again !!!');
@@ -131,11 +137,9 @@ class Auth extends CI_Controller
                        'X-Mailer: PHP/' . phpversion();
 
 
-
             $messa  = " Hi,To reset your password, visit the following address: www.findcave.in/fashion/auth/changepassword/$userid->id  ";
 
             $messa .= 'Thank You';
-
 
             $config['protocol']='mail';
             $this->email->initialize($config);
@@ -147,8 +151,17 @@ class Auth extends CI_Controller
             $this->email->message($messa);
             $chk = $this->email->send();
 
-            $data['page'] = 'login/index';
-            $this->load->view('page', $data);
+            if($chk) {
+                $this->session->set_flashdata('toast_success', 'Check The Mail for password updation!!!');
+                $data['page'] = 'login/index';
+                $this->load->view('page', $data);
+
+            } else {
+                $this->session->set_flashdata('toast_error', 'Failed. Try Again !!!');
+                $data['page'] = 'login/index';
+                $this->load->view('page', $data);
+            }
+
         }
     }
 

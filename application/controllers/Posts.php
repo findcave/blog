@@ -3,15 +3,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Posts extends CI_Controller
 {
+    var $data;
 
     public function  __construct()
     {
         parent::__construct();
+
+        $this->channel = array(
+            'channel' =>$this->post->get_all_item('channel')
+        );
     }
+
 
     public function index(){
 
-        $date = mdate('%Y-%m-%d %H:%i:%s', now());
+
+        $data['channels'] =$this->post->get_all_item('channel');
+
+
+        $date = mdate('%Y-%m-%d', now());
 
         $data['posts'] = $this->post->get_one_item_less_equal('posts','status',1,'publishdate',$date);
 
@@ -19,30 +29,25 @@ class Posts extends CI_Controller
             $data["channel"][] = $this->post->get_one_item('channel','id',$val->channelid);
             $data["users"][] = $this->post->get_one_item('users','id',$val->userid);
 
-            $tagss='';     $tag_array = '';
+            $tagss='';     $tag_array[]= '';
             if(!empty($val->tags))
             {
                 $tagss=explode(',',$val->tags);
 
+                $i = 0 ;
                 foreach($tagss as $tag)
                 {
 
-                    $tag_array_val= $this->post->get_one_items('tags','id',$tag);
-
-                    if($tag_array == ''){
-                        $tag_array = $tag_array_val[0]->name ;
-                    }
-                    else{
-                        $tag_array = $tag_array.','.$tag_array_val[0]->name;
-                    }
-
+                    $tag_array_val= $this->post->get_one_item('tags','id',$tag);
+                    $tag_array[$i]= $tag_array_val->name;
+                    $i++;
                 }
              }
              $data['tags'][] = $tag_array ;
         }
 
-        $data['channels'] = $this->post->get_all_item('channel');
-        $data['page'] = 'posts/index';
+       $data['channels'] = $this->channel;
+       $data['page'] = 'posts/index';
 
         $this->load->view('page', $data);
 
@@ -67,8 +72,10 @@ class Posts extends CI_Controller
 
         if($this->form_validation->run() == FALSE){
             $data['channels'] = $this->post->get_one_items('channel','status',1);
+            $data['tags'] = $this->post->get_all_item('tags');
+
             $data['page'] = 'posts/create';
-            $this->load->view('posts/page', $data);
+            $this->load->view('user/page', $data);
         }else {
             $title = $this->input->post('title');
             $description = $this->input->post('description');
@@ -90,7 +97,7 @@ class Posts extends CI_Controller
                 }
             }
 
-            $pic ='default.png';
+            $pic ='';
             $filename =   $_FILES["pic"]["name"];
 
             if(!empty($filename))
@@ -133,7 +140,6 @@ class Posts extends CI_Controller
 
             }
 
-
             $datas = array(
                 'title' => $title,
                 'description' => $description,
@@ -141,7 +147,7 @@ class Posts extends CI_Controller
                 'userid' => $_SESSION['userid'],
                 'slug' => $slug,
                 'publishdate' => $publishingdate,
-                'tags' => $tags,
+                'tags' =>$tags,
                 'image' => $pic,
                 'status' => $status,
             );
@@ -160,6 +166,7 @@ class Posts extends CI_Controller
     public function edit($slug)
     {
         $data['channels'] = $this->post->get_one_items('channel','status',1);
+        $data['tags'] = $this->post->get_all_item('tags');
 
         $data['post'] = $this->post->get_one_item('posts','slug',$slug);
         $data['page'] = 'posts/edit';
@@ -181,7 +188,7 @@ class Posts extends CI_Controller
 
             $data['page'] = 'posts/edit';
             $data['post'] = '';
-            $this->load->view('posts/page', $data);
+            $this->load->view('user/page', $data);
 
         } else {
             $title = $this->input->post('title');
@@ -189,12 +196,24 @@ class Posts extends CI_Controller
             $channel = $this->input->post('channel');
             $checked = $this->input->post('status');
             if(isset($checked) == 1)  { $status = 1 ;  } else { $status = 0; }
+            $tagarr = $this->input->post('tag');
+            $tags='';
+            if(sizeof($tagarr)>1)
+            {
+                foreach($tagarr as $tag)
+                {
+                    if($tags == ''){ $tags =$tag;   }
+                    else{ $tags = $tags.','. $tag;  }
+                }
+            }
+
 
             $data = array(
                 'title' => $title,
                 'description' => $description,
                 'channelid' => $channel,
                 'status' => $status,
+                'tags' =>$tags,
             );
             $flag = $this->post->update_one_item($id, 'id', 'posts', $data);
             if ($flag) {
@@ -209,7 +228,14 @@ class Posts extends CI_Controller
 
     public function destroy($slug)
     {
+        $image = $this->post->get_one_item('posts','slug',$slug);
+        if((!empty($image->image)))
+        {
+            unlink('assets/blogpost/'.$image->image);
+            unlink('assets/blogpost/thumb/'.$image->image);
+        }
         $this->post->delete($slug,'slug','posts');
+
         redirect('user');
     }
 
@@ -234,6 +260,8 @@ class Posts extends CI_Controller
 
     public function show($field,$value)
     {
+        $date = mdate('%Y-%m-%d', now());
+
         if($field == 'auther'){
             $data["posts"] = $this->post->get_one_items('posts','userid',$value);
         }
@@ -243,18 +271,48 @@ class Posts extends CI_Controller
             }
             else{
                 $data["posts"] = $this->post->get_one_items('posts','channelid',$value);
+                $data["posts"] = $this->post->get_two_item_less_equal('posts','status',1,'channelid',$value,'publishdate',$date);
             }
         }
+        if($field == 'tags'){
+
+            $tag = $this->post->get_one_item('tags','name',$value);
+
+            if($this->session->userdata('userid') != ""){
+                $data["posts"] = $this->post->get_one_items_like('posts','tags',$tag->id,'userid',$this->session->userdata('userid'));
+            }
+            else{
+                $data["posts"] = $this->post->get_one_item_items_like('posts','tags',$tag->id,'status',1,'publishdate',$date);
+
+            }
+        }
+
+
         foreach($data["posts"] as $val){
             $data["channel"][] = $this->post->get_one_item('channel','id',$val->channelid);
             $data["users"][] = $this->post->get_one_item('users','id',$val->userid);
+            $tagss='';     $tag_array[]= '';
+            if(!empty($val->tags))
+            {
+                $tagss=explode(',',$val->tags);
+
+                $i = 0 ;
+                foreach($tagss as $tag)
+                {
+
+                    $tag_array_val= $this->post->get_one_item('tags','id',$tag);
+                    $tag_array[$i]= $tag_array_val->name;
+                    $i++;
+                }
+            }
+            $data['tags'][] = $tag_array ;
         }
 
         $data['channels'] = $this->post->get_all_item('channel');
         $data['page'] = 'posts/index';
 
         if($this->session->userdata('userid') != ""){
-            $this->load->view('user/page', $data);
+           $this->load->view('user/page', $data);
         }
         else{
             $this->load->view('posts/page', $data);
@@ -318,4 +376,5 @@ class Posts extends CI_Controller
             redirect('user');
         }
     }
+
 }

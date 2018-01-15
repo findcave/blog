@@ -37,6 +37,20 @@
             <span class="text-danger"> <?php echo form_error('channel'); ?> </span>
         </div>
 
+        <?php $tagArray='' ; if(!empty($post->tags)){$tagArray =explode(',',$post->tags);}?>
+        <div class="form-group">
+            <label for="channel">Tags</label>
+            <select  multiple='multiple'   class='js-example-basic-multiple control-group'
+                     tabindex='1'
+                     name='tag[]' id="multipleCast">
+                <?php foreach($tags as $tag) {?>
+                    <option  <?php if(in_array($tag->id,$tagArray)){echo "selected";}?>  value="<?php echo $tag->id; ?>"><?php echo $tag->name; ?></option>
+                <?php }?>
+            </select>
+            <span style="color:#CC0000"> <?php echo form_error('tag[]'); ?> </span>
+        </div>
+
+
         <div class="form-check">
             <input class="form-check-input" <?php if(!empty($post)){ if($post->status  == 1) { echo "checked" ; } }?> type="checkbox" value="" id="status" name="status">
             <label class="form-check-label" for="status">
@@ -51,3 +65,7 @@
     </form>
   </div>
 </div>
+<!-- select 2 -->
+<script type="text/javascript">
+    $(".js-example-basic-multiple").select2();
+</script>

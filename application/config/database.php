@@ -76,14 +76,21 @@ $query_builder = TRUE;
 $db['default'] = array(
 	'dsn'	=> '',
 	'hostname' => 'localhost',
+
 	'username' => 'root',
 	'password' => '',
 	'database' => 'blog',
+
+//    'username' => 'fashion_user',
+//    'password' => 'fashion_pass',
+//    'database' => 'fashion',
+
+    
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
 	'db_debug' => (ENVIRONMENT !== 'production'),
-	'cache_on' => FALSE,
+    'cache_on' => FALSE,
 	'cachedir' => '',
 	'char_set' => 'utf8',
 	'dbcollat' => 'utf8_general_ci',

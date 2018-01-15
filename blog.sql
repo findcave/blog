@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 25, 2018 at 07:50 AM
+-- Generation Time: Jan 15, 2018 at 06:17 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -106,7 +106,7 @@ CREATE TABLE `posts` (
   `channelid` int(11) NOT NULL,
   `userid` int(11) NOT NULL,
   `slug` text NOT NULL,
-  `publishdate` datetime NOT NULL,
+  `publishdate` date NOT NULL,
   `tags` text NOT NULL,
   `image` text NOT NULL,
   `status` tinyint(4) NOT NULL COMMENT '1 as active, 0 as inactive',
@@ -118,21 +118,15 @@ CREATE TABLE `posts` (
 --
 
 INSERT INTO `posts` (`id`, `title`, `description`, `channelid`, `userid`, `slug`, `publishdate`, `tags`, `image`, `status`, `created_at`) VALUES
-(6, 'Php Developemnt', 'Php  version since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of', 1, 4, 'php-developemnt', '2018-01-17 00:00:00', '', 'default.png', 0, '2018-01-24 19:09:48'),
-(7, 'designing methods', 'ver since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of', 5, 2, 'designing-methods', '2018-01-19 00:00:00', '', 'default.png', 1, '2018-01-24 19:09:38'),
-(8, 'designing bootsrtap', 'ver since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of', 5, 2, 'designing-bootsrtap', '2018-01-22 00:00:00', '', 'default.png', 0, '2018-01-24 19:09:50'),
-(9, 'Javascipt developemnt', 'ver since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of', 2, 3, 'javascipt-developemnt', '2018-01-09 00:00:00', '', 'default.png', 1, '2018-01-24 19:09:43'),
-(10, 'Css Styling', 'ver since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of', 5, 3, 'css-styling', '2018-01-25 00:00:00', '', 'default.png', 1, '2018-01-24 19:09:41'),
-(11, 'Java Development', 'JAva ver since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of', 3, 4, 'java-development', '2018-01-09 00:00:00', '', 'post_img_p32rrt.jpg', 1, '2018-01-24 19:35:53'),
-(13, 'bgcxg dfgdfg', 'dfg dfgdgdsg', 2, 4, 'bgcxg-dfgdfg', '2018-01-26 00:00:00', '', 'post_img_p32rs2.jpg', 1, '2018-01-24 19:36:02'),
-(15, 'yyy deve', 'dgfds dsfdsf', 1, 4, 'yyy-deve', '2018-01-26 00:00:00', '', 'default.png', 1, '2018-01-24 19:09:30'),
-(16, 'hfh fhdfhf', 'dfgdfg dfg', 2, 4, 'hfh-fhdfhf', '2018-01-26 00:00:00', '', 'default.png', 1, '2018-01-24 19:09:28'),
-(17, 'gdftgdfg dfgdfg', 'dfgdfg dfg', 2, 4, 'gdftgdfg-dfgdfg', '2018-01-26 00:00:00', '', 'default.png', 1, '2018-01-24 19:09:26'),
-(18, 'gf dfgdfg', 'fdgdfg', 5, 4, 'gf-dfgdfg', '2018-01-26 00:00:00', '', 'default.png', 0, '2018-01-24 19:09:24'),
-(19, 'gfhygf gfh', 'gfh', 1, 4, 'gfhygf-gfhgfhf', '2018-01-25 00:00:00', '', 'default.png', 0, '2018-01-24 19:09:21'),
-(20, 'ghkjghghhghj ghjgh', 'ghjghj', 5, 4, 'ghkjghghhghj-ghjgh', '2018-01-25 00:00:00', '', 'default.png', 0, '2018-01-24 19:09:19'),
-(21, 'nbmbv mbv', 'gfjgfj gfjgfj', 1, 4, 'nbmbv-mbv', '2018-01-26 00:00:00', '', 'post_img_p32q08.jpg', 0, '2018-01-24 18:57:44'),
-(22, 'cake php developemnt', 'zxcvxzxz asfasf asfasf asfasfasf d df gdfgdfg dfgdsg dgsdgd gdsgdsg dsgds gsdgsd gdsg dsgdsgdsgds dsgsdd\r\nhjdf dfyhdfhdfdfgdfgstewtew urturt', 1, 4, 'cake-php-developemnt', '2018-01-12 00:00:00', '4,5,6,7', 'post_img_p32vqc.jpg', 1, '2018-01-24 21:16:24');
+(6, 'Php Developemnt', 'Php  version since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of', 1, 4, 'php-developemnt', '2018-01-31', '', 'default.png', 1, '2018-01-15 12:04:08'),
+(7, 'designing methods', 'ver since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of', 5, 2, 'designing-methods', '2018-01-19', '', 'default.png', 1, '2018-01-24 19:09:38'),
+(8, 'designing bootsrtap', 'ver since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of', 5, 2, 'designing-bootsrtap', '2018-01-22', '', 'default.png', 1, '2018-01-30 11:59:57'),
+(9, 'Javascipt developemnt', 'ver since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of', 2, 3, 'javascipt-developemnt', '2018-01-30', '', 'default.png', 1, '2018-01-15 12:04:46'),
+(10, 'Css Styling', 'ver since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of', 5, 3, 'css-styling', '2018-01-25', '', 'default.png', 1, '2018-01-15 12:04:00'),
+(11, 'Java Development', 'JAva ver since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of', 3, 4, 'java-development', '2018-01-31', '', 'post_img_p2lg7f.jpg', 1, '2018-01-15 12:03:55'),
+(22, 'cake php developemnt', 'zxcvxzxz asfasf asfasf asfasfasf d df gdfgdfg dfgdsg dgsdgd gdsgdsg dsgds gsdgsd gdsg dsgdsgdsgds dsgsdd\r\nhjdf dfyhdfhdfdfgdfgstewtew urturt', 1, 4, 'cake-php-developemnt', '2018-01-14', '4,5,6', 'post_img_p32vqc.jpg', 1, '2018-01-15 12:10:57'),
+(23, 'laravel development', 'and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release', 1, 8, 'laravel-development', '2018-01-15', '4,5,6,7', 'post_img_p33oc8.jpg', 1, '2018-01-15 12:21:55'),
+(25, 'gh gugh', 'yfvyg g', 1, 4, 'gh-gugh', '2018-01-09', '5,6', 'post_img_p2lg8n.jpg', 1, '2018-01-15 12:05:45');
 
 -- --------------------------------------------------------
 
@@ -157,7 +151,8 @@ INSERT INTO `tags` (`id`, `name`, `created_at`) VALUES
 (6, 'development', '2018-01-24 20:59:22'),
 (7, 'designing', '2018-01-24 20:59:29'),
 (8, 'java', '2018-01-24 20:59:42'),
-(9, 'javascript', '2018-01-24 20:59:49');
+(9, 'javascript', '2018-01-24 20:59:49'),
+(10, 'Laravel', '2018-01-25 08:07:40');
 
 -- --------------------------------------------------------
 
@@ -180,11 +175,12 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `phone`, `password`, `usertype`, `created_at`) VALUES
-(1, 'admin', 'admin@admin.com', '9544885554', '21232f297a57a5a743894a0e4a801fc3', 1, '2018-01-24 12:56:25'),
+(1, 'admin', 'admin@admin.com', '9544885554', '21232f297a57a5a743894a0e4a801fc3', 1, '2018-01-15 11:37:02'),
 (2, 'sarath', 'sarath@gmail.com', '9544885553', '202cb962ac59075b964b07152d234b70', 2, '2018-01-24 12:56:29'),
 (3, 'renish', 'renish@gmail.com', '9544885554', '202cb962ac59075b964b07152d234b70', 2, '2018-01-24 12:56:30'),
 (4, 'dhaya', 'dhayams01@gmail.com', '9544885554', '202cb962ac59075b964b07152d234b70', 2, '2018-01-25 06:49:49'),
-(7, 'priya', 'priya@gmail.com', '9544885554', '202cb962ac59075b964b07152d234b70', 2, '2018-01-25 06:37:34');
+(7, 'priya', 'priya@gmail.com', '9544885554', '202cb962ac59075b964b07152d234b70', 2, '2018-01-25 06:37:34'),
+(8, 'sruthy', 'sruthy@gmail.com', '9895234765', '202cb962ac59075b964b07152d234b70', 2, '2018-01-25 07:15:31');
 
 --
 -- Indexes for dumped tables
@@ -249,17 +245,17 @@ ALTER TABLE `employee`
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 --
 -- AUTO_INCREMENT for table `tags`
 --
 ALTER TABLE `tags`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

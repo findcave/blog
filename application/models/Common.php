@@ -70,7 +70,42 @@ class Common extends CI_Model
     public function get_one_item_less_equal($table,$field1,$value1,$field2,$value2)
     {
         $this->db->where($field1,$value1);
-        $this->db->where($field2.' <' ,$value2);
+        $this->db->where($field2.' <=' ,$value2);
+        $query = $this->db->get($table);
+        $res=$query->result();
+        return $res;
+    }
+
+    public function get_two_item_less_equal($table,$field1,$value1,$field2,$value2,$field3,$value3)
+    {
+        $this->db->where($field1,$value1);
+        $this->db->where($field2,$value2);
+        $this->db->where($field3.' <=' ,$value3);
+        $query = $this->db->get($table);
+        $res=$query->result();
+        return $res;
+    }
+
+    public function get_one_items_like($table,$field2,$value2,$field1,$value1){
+        $this->db->like($field2,$value2);
+        $this->db->where($field1,$value1);
+        $query = $this->db->get($table);
+        $res=$query->result();
+        return $res;
+    }
+
+    public function get_items_like($table,$field1,$value1){
+        $this->db->like($field1,$value1);
+        $query = $this->db->get($table);
+        $res=$query->result();
+        return $res;
+    }
+
+
+    public function get_one_item_items_like($table,$field1,$value1,$field2,$value2,$field3,$value3){
+        $this->db->like($field1,$value1);
+        $this->db->where($field2,$value2);
+        $this->db->where($field3.' <=' ,$value3);
         $query = $this->db->get($table);
         $res=$query->result();
         return $res;

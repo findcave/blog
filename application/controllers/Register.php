@@ -41,6 +41,7 @@ class Register extends CI_Controller {
                     'userid'  => $userid,
                     'username'  => $this->input->post('name'),
                     'email'     => $this->input->post('email'),
+                    'usertype'     =>2,
                     'logged_in' => TRUE
                 );
 

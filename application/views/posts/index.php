@@ -18,7 +18,13 @@
 
                 <div class="media">
                     <div>
-                        <img class="mr-3" src="<?php echo base_url();?>assets/blogpost/thumb/<?php echo $post->image ;?>" alt="Generic placeholder image">
+                        <?php if(!empty($post->image)) { ?>
+                          <img class="mr-3" src="<?php echo base_url();?>assets/blogpost/thumb/<?php echo $post->image ;?>" >
+                        <?php }else {?>
+                          <img class="mr-3" src="<?php echo base_url();?>assets/blogpost/thumb/default.png" >
+                        <?php }?>
+
+
                         <div style="clear: both"></div>
                         <?php if($this->session->userdata('usertype') == 2) { ?>
                              <a href="#forgot" class="change-image" data-toggle="modal" data-postid="<?php echo $post->id ;?>">Change</a>
@@ -35,7 +41,12 @@
                             </p>
                             <p><?php echo $post->description ;?></p>
 
-                            <p><?php echo  $tags[$key] ; ?></p>
+                            <p><?php if(!empty($tags[$key])) { foreach($tags[$key] as $tgs) { ?>
+                                  <a href="<?php echo base_url(); ?>posts/show/tags/<?php echo $tgs ;?>"  ><?php echo $tgs; echo '&nbsp';?></a>
+                                <?php } } ?> </p>
+
+
+
 
                           <?php if($this->session->userdata('usertype') == 2) { ?>
 

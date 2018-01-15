@@ -227,7 +227,6 @@ $config['allow_get_array'] = TRUE;
 |
 */
 $config['log_threshold'] = 0;
-
 /*
 |--------------------------------------------------------------------------
 | Error Logging Directory Path
@@ -524,3 +523,19 @@ $config['rewrite_short_tags'] = FALSE;
 | Array:		array('10.0.1.200', '192.168.5.0/24')
 */
 $config['proxy_ips'] = '';
+
+function __autoload($class)
+{
+    if (strpos($class, 'CI_') !== 0)
+    {
+        if (file_exists($file = APPPATH . 'core/' . $class . EXT))
+        {
+            include $file;
+        }
+
+        elseif (file_exists($file = APPPATH . 'libraries/' . $class . EXT))
+        {
+            include $file;
+        }
+    }
+}

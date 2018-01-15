@@ -12,13 +12,13 @@
 
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="text" class="form-control" id="email" value="<?php echo set_value('email') ;?>" autocomplete="off" name="email">
+                <input type="text" class="form-control" id="email" value="<?php echo set_value('email') ;?>"  name="email">
                 <span class="text-danger"> <?php echo form_error('email'); ?> </span>
             </div>
 
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="text" class="form-control" id="password" value="<?php echo set_value('password') ;?>" autocomplete="off" name="password">
+                <input type="password" class="form-control" id="password" value="<?php echo set_value('password') ;?>" autocomplete="off" name="password">
                 <span class="text-danger"> <?php echo form_error('password'); ?> </span>
             </div>
 

@@ -1,5 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+if(!$this->session->userdata('username')){
+    redirect('auth');
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -8,6 +11,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+
+
     <link rel="icon" href="../../../../favicon.ico">
 
     <title>Blog using Codeigniter</title>
@@ -62,7 +67,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </li>
             <?php }?>
 
-            <?php echo $this->session->userdata('usertype');  ?>
             <?php if($this->session->userdata('usertype') == 2) { ?>
                 <li class="nav-item active">
                     <a class="nav-link" href="<?php echo base_url(); ?>user">Home</span></a>
