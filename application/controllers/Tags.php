@@ -27,7 +27,7 @@ class Tags extends CI_Controller
 
     public function store()
     {
-        $this->form_validation->set_rules('name', 'Name', 'trim|required');
+        $this->form_validation->set_rules('name', 'Name', 'trim|required|is_unique[tags.name]');
 
         if ($this->form_validation->run() == FALSE) {
 
@@ -35,10 +35,7 @@ class Tags extends CI_Controller
             $this->load->view('tags/page', $data);
 
         }else {
-
-            $datas = array(
-                'name' => $this->input->post('name'),
-            );
+            $datas['name']  =  str_replace('','-',$this->input->post('name'));
             $flag = $this->channel->item_insert('tags', $datas);
 
 
@@ -63,20 +60,19 @@ class Tags extends CI_Controller
     {
         $id =  trim($this->security->xss_clean($this->input->post('id')));
 
-        $this->form_validation->set_rules('name', 'Name', 'trim|required');
+        $this->form_validation->set_rules('name', 'Name', 'trim|required|is_unique[tags.name]');
         $this->form_validation->set_rules('id', 'ID', 'trim|required');
 
         if($this->form_validation->run() == FALSE) {
 
+            $data['tag'] = $this->channel->get_one_item('tags', 'id', $id);
             $data['page'] = 'tags/edit';
-            $data['tag'] = '';
             $this->load->view('tags/page', $data);
 
         }
         else {
-            $data = array(
-                'name' => $this->input->post('name'),
-            );
+            $data['name']  =  str_replace(' ','-',$this->input->post('name'));
+
             $flag = $this->channel->update_one_item($id, 'id', 'tags', $data);
             if ($flag) {
                 $this->session->set_flashdata('toast_success', 'Tag Updated Successfully  !!!');

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 15, 2018 at 06:17 PM
+-- Generation Time: Jan 17, 2018 at 06:39 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -39,8 +39,7 @@ CREATE TABLE `channel` (
 --
 
 INSERT INTO `channel` (`id`, `name`, `description`, `status`, `created_at`) VALUES
-(1, 'php', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley', 1, '2018-01-09 14:10:08'),
-(2, 'Javascript', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley', 1, '2018-01-09 05:43:47'),
+(2, 'Javascript', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley', 1, '2018-01-17 14:25:14'),
 (3, 'java', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley', 1, '2018-01-09 14:10:14'),
 (5, 'html', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley', 1, '2018-01-11 11:04:15'),
 (6, 'vue', 'ver since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of', 0, '2018-01-24 14:36:03');
@@ -96,6 +95,54 @@ INSERT INTO `employee` (`id`, `name`, `phone`, `email`, `departmentid`, `status`
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `favourite`
+--
+
+CREATE TABLE `favourite` (
+  `id` int(11) NOT NULL,
+  `postid` int(11) NOT NULL,
+  `userid` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `keys`
+--
+
+CREATE TABLE `keys` (
+  `id` int(11) NOT NULL,
+  `key` varchar(40) NOT NULL,
+  `level` int(2) NOT NULL,
+  `ignore_limits` tinyint(1) NOT NULL DEFAULT '0',
+  `is_private_key` tinyint(1) NOT NULL DEFAULT '0',
+  `ip_addresses` text,
+  `date_created` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `logs`
+--
+
+CREATE TABLE `logs` (
+  `id` int(11) NOT NULL,
+  `uri` varchar(255) NOT NULL,
+  `method` varchar(6) NOT NULL,
+  `params` text,
+  `api_key` varchar(40) NOT NULL,
+  `ip_address` varchar(45) NOT NULL,
+  `time` int(11) NOT NULL,
+  `rtime` float DEFAULT NULL,
+  `authorized` varchar(1) NOT NULL,
+  `response_code` smallint(3) DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `posts`
 --
 
@@ -106,7 +153,7 @@ CREATE TABLE `posts` (
   `channelid` int(11) NOT NULL,
   `userid` int(11) NOT NULL,
   `slug` text NOT NULL,
-  `publishdate` date NOT NULL,
+  `publishdate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `tags` text NOT NULL,
   `image` text NOT NULL,
   `status` tinyint(4) NOT NULL COMMENT '1 as active, 0 as inactive',
@@ -118,15 +165,10 @@ CREATE TABLE `posts` (
 --
 
 INSERT INTO `posts` (`id`, `title`, `description`, `channelid`, `userid`, `slug`, `publishdate`, `tags`, `image`, `status`, `created_at`) VALUES
-(6, 'Php Developemnt', 'Php  version since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of', 1, 4, 'php-developemnt', '2018-01-31', '', 'default.png', 1, '2018-01-15 12:04:08'),
-(7, 'designing methods', 'ver since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of', 5, 2, 'designing-methods', '2018-01-19', '', 'default.png', 1, '2018-01-24 19:09:38'),
-(8, 'designing bootsrtap', 'ver since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of', 5, 2, 'designing-bootsrtap', '2018-01-22', '', 'default.png', 1, '2018-01-30 11:59:57'),
-(9, 'Javascipt developemnt', 'ver since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of', 2, 3, 'javascipt-developemnt', '2018-01-30', '', 'default.png', 1, '2018-01-15 12:04:46'),
-(10, 'Css Styling', 'ver since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of', 5, 3, 'css-styling', '2018-01-25', '', 'default.png', 1, '2018-01-15 12:04:00'),
-(11, 'Java Development', 'JAva ver since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of', 3, 4, 'java-development', '2018-01-31', '', 'post_img_p2lg7f.jpg', 1, '2018-01-15 12:03:55'),
-(22, 'cake php developemnt', 'zxcvxzxz asfasf asfasf asfasfasf d df gdfgdfg dfgdsg dgsdgd gdsgdsg dsgds gsdgsd gdsg dsgdsgdsgds dsgsdd\r\nhjdf dfyhdfhdfdfgdfgstewtew urturt', 1, 4, 'cake-php-developemnt', '2018-01-14', '4,5,6', 'post_img_p32vqc.jpg', 1, '2018-01-15 12:10:57'),
-(23, 'laravel development', 'and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release', 1, 8, 'laravel-development', '2018-01-15', '4,5,6,7', 'post_img_p33oc8.jpg', 1, '2018-01-15 12:21:55'),
-(25, 'gh gugh', 'yfvyg g', 1, 4, 'gh-gugh', '2018-01-09', '5,6', 'post_img_p2lg8n.jpg', 1, '2018-01-15 12:05:45');
+(1, 'codeigniter development', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release', 2, 4, 'codeigniter-development', '2018-01-16 00:00:00', '2,6', 'post_img_p2p96l.jpg', 1, '2018-01-17 12:28:05'),
+(2, 'laravel development', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release', 1, 4, 'wordepress-development', '2018-01-17 19:48:09', '2,4', 'post_img_p2p9ey.jpg', 1, '2018-01-17 14:18:09'),
+(3, 'magento development', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release', 5, 4, 'magento-development', '2018-01-16 00:00:00', '6,7', 'post_img_p2pdr3.jpg', 0, '2018-01-17 14:04:16'),
+(4, 'wordpress development', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release', 5, 2, 'wordpress-development', '2018-01-17 20:00:43', '6,9', 'post_img_p2pez6.jpg', 1, '2018-01-17 14:30:43');
 
 -- --------------------------------------------------------
 
@@ -145,7 +187,7 @@ CREATE TABLE `tags` (
 --
 
 INSERT INTO `tags` (`id`, `name`, `created_at`) VALUES
-(2, 'web developmet', '2018-01-24 20:24:21'),
+(2, 'web', '2018-01-17 14:05:55'),
 (4, 'php', '2018-01-24 20:59:11'),
 (5, 'html', '2018-01-24 20:59:17'),
 (6, 'development', '2018-01-24 20:59:22'),
@@ -205,6 +247,12 @@ ALTER TABLE `employee`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `favourite`
+--
+ALTER TABLE `favourite`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `posts`
 --
 ALTER TABLE `posts`
@@ -242,15 +290,20 @@ ALTER TABLE `department`
 ALTER TABLE `employee`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
+-- AUTO_INCREMENT for table `favourite`
+--
+ALTER TABLE `favourite`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `tags`
 --
 ALTER TABLE `tags`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `users`
 --

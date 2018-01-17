@@ -1,20 +1,24 @@
 
-<?php if($this->session->userdata('usertype') == 2) { ?>
 <div class="row">
       <div class="col">
-        <h3 class="text-info" style="display:inline">Posts</h3>
-        <span class="float-right"> <a href="<?php echo base_url(); ?>posts/create" class="btn btn-success">New Post</a><br></span>
-      <hr>
+
+          <h3 class="text-info" style="display:inline">Posts</h3>
+
+          <?php if($this->session->userdata('usertype') == 2) { ?>
+             <span class="float-right"> <a href="<?php echo base_url(); ?>posts/create" class="btn btn-success">New Post</a><br></span>
+          <?php }?>
+
+          <hr>
       </div>
     </div>
-<?php }?>
 
 <div class="row">
       <div class="col postlist">
             <?php
             foreach ($posts as $key=>$post) {
-            $dateObj =  date("jS F, Y", strtotime($post->publishdate));
-            ?>
+                if($channel[$key]):
+                    $dateObj =  date("jS F, Y", strtotime($post->publishdate));
+                    ?>
 
                 <div class="media">
                     <div>
@@ -26,29 +30,56 @@
 
 
                         <div style="clear: both"></div>
-                        <?php if($this->session->userdata('usertype') == 2) { ?>
+                        <?php if($this->session->userdata('userid') == $post->userid) { ?>
                              <a href="#forgot" class="change-image" data-toggle="modal" data-postid="<?php echo $post->id ;?>">Change</a>
                         <?php }?>
                     </div>
 
 
                       <div class="media-body">
-                            <h4 class="mt-0"><?php echo $post->title ;?></h4>
-                            <p> By <a href="<?php echo base_url();?>posts/show/auther/<?php echo $users[$key]->id ;?>"><?php echo $users[$key]->name ;?> </a>,
+                            <h4 class="mt-0">  <?php echo $post->title ;?> </h4>
+
+
+                            <p>
+                                By <a href="<?php echo base_url();?>posts/show/auther/<?php echo $users[$key]->id ;?>"><?php echo $users[$key]->name ;?> </a>,
                                 Channels : <a href="<?php echo base_url();?>posts/show/channel/<?php echo $channel[$key]->id ;?>"><?php echo $channel[$key]->name ;?></a>,
-                                Published at <?php echo $dateObj ;?>
-                                <?php  echo ($post->status == 1) ? 'Active' : 'Inactive'; ?>
+                                Published at <?php echo $this->post->time_elapsed_string($post->publishdate) ; ?> ,
+                                <?php  echo ($post->status == 1) ? 'Active' : 'Inactive'; ?>,
+
+
+
+                                    <?php if($this->session->userdata('usertype') == 2) {
+                                        if($isfavourited[$key]== 1): ?>
+                                            <a href="<?php base_url() ;?>user/unfavourite/<?php echo $post->id ;?>/<?php echo $this->session->userdata('userid') ;?>" style="color: red">
+                                               <i class="fa fa-heart" aria-hidden="true"></i>
+                                            </a>
+                                        <?php else: ?>
+                                            <a href="<?php base_url() ;?>user/favourite/<?php echo $post->id ;?>/<?php echo $this->session->userdata('userid') ;?>" style="color: red">
+                                                <i class="fa fa-heart-o" aria-hidden="true"></i>
+                                            </a>
+                                        <?php endif; echo $favourite[$key] ; } ?>
+
+
+
+
+                                    <?php if($this->session->userdata('usertype') != 2) { ?>
+                                        <i  class="fa fa-heart" aria-hidden="true" style="color: red"></i>
+                                    <?php echo $favourite[$key] ; } ?>
+
+
                             </p>
+
                             <p><?php echo $post->description ;?></p>
 
-                            <p><?php if(!empty($tags[$key])) { foreach($tags[$key] as $tgs) { ?>
+                            <p>
+                                <?php if(!empty($tags[$key])) { foreach($tags[$key] as $tgs) { ?>
                                   <a href="<?php echo base_url(); ?>posts/show/tags/<?php echo $tgs ;?>"  ><?php echo $tgs; echo '&nbsp';?></a>
-                                <?php } } ?> </p>
+                                <?php } } ?>
+                            </p>
 
 
 
-
-                          <?php if($this->session->userdata('usertype') == 2) { ?>
+                          <?php if($this->session->userdata('userid') == $post->userid) { ?>
 
                               <div class="btn-group">
                                       <a href="<?php echo base_url() ;?>posts/edit/<?php echo $post->slug ;?>" class="btn btn-link btn-sm" >Edit</a>
@@ -77,7 +108,7 @@
 
                 <hr>
 
-            <?php } ?>
+            <?php endif; } ?>
 
       </div>
 </div>

@@ -9,25 +9,24 @@ class Posts extends CI_Controller
     {
         parent::__construct();
 
-        $this->channel = array(
-            'channel' =>$this->post->get_all_item('channel')
-        );
+        $this->channel = $this->post->get_one_items('channel','status',1);
+        $this->tags = $this->post->get_all_item('tags');
+        $this->date = mdate('%Y-%m-%d', now());
     }
 
 
     public function index(){
 
+        $date = $this->date;
 
-        $data['channels'] =$this->post->get_all_item('channel');
-
-
-        $date = mdate('%Y-%m-%d', now());
-
-        $data['posts'] = $this->post->get_one_item_less_equal('posts','status',1,'publishdate',$date);
+        $data['posts'] = $this->post->get_one_items_less_equal('posts','status',1,'publishdate',$date);
 
         foreach($data["posts"] as $val){
             $data["channel"][] = $this->post->get_one_item('channel','id',$val->channelid);
             $data["users"][] = $this->post->get_one_item('users','id',$val->userid);
+
+            $favorite = $this->post->get_one_items('favourite','postid',$val->id);
+            $data["favourite"][] = sizeof($favorite);
 
             $tagss='';     $tag_array[]= '';
             if(!empty($val->tags))
@@ -46,8 +45,8 @@ class Posts extends CI_Controller
              $data['tags'][] = $tag_array ;
         }
 
-       $data['channels'] = $this->channel;
-       $data['page'] = 'posts/index';
+        $data['channels'] = $this->channel;
+        $data['page'] = 'posts/index';
 
         $this->load->view('page', $data);
 
@@ -56,7 +55,7 @@ class Posts extends CI_Controller
     public function create()
     {
 
-        $data['channels'] = $this->post->get_one_items('channel','status',1);
+        $data['channels'] = $this->channel;
         $data['tags'] = $this->post->get_all_item('tags');
         $data['page'] = 'posts/create';
         $this->load->view('user/page', $data);
@@ -71,20 +70,22 @@ class Posts extends CI_Controller
         $this->form_validation->set_rules('slug', 'Slug', 'required|trim|alpha_dash|is_unique[posts.slug]');
 
         if($this->form_validation->run() == FALSE){
-            $data['channels'] = $this->post->get_one_items('channel','status',1);
-            $data['tags'] = $this->post->get_all_item('tags');
+
+            $data['channels'] =  $this->channel;
+            $data['tags'] = $this->tags;
 
             $data['page'] = 'posts/create';
             $this->load->view('user/page', $data);
+
         }else {
+
             $title = $this->input->post('title');
             $description = $this->input->post('description');
             $channel = $this->input->post('channel');
             $publishingdate = $this->input->post('publishingdate');
             $slug = $this->input->post('slug');
 
-            $checked = $this->input->post('status');
-            if(isset($checked) == 1) { $status = 1; } else { $status = 0; }
+
 
             $tagarr = $this->input->post('tag');
             $tags='';
@@ -149,7 +150,6 @@ class Posts extends CI_Controller
                 'publishdate' => $publishingdate,
                 'tags' =>$tags,
                 'image' => $pic,
-                'status' => $status,
             );
             $flag = $this->post->item_insert('posts', $datas);
 
@@ -165,8 +165,8 @@ class Posts extends CI_Controller
 
     public function edit($slug)
     {
-        $data['channels'] = $this->post->get_one_items('channel','status',1);
-        $data['tags'] = $this->post->get_all_item('tags');
+        $data['channels'] = $this->channel;
+        $data['tags'] = $this->tags ;
 
         $data['post'] = $this->post->get_one_item('posts','slug',$slug);
         $data['page'] = 'posts/edit';
@@ -181,21 +181,19 @@ class Posts extends CI_Controller
         $this->form_validation->set_rules('title', 'Title', 'trim|required');
         $this->form_validation->set_rules('description', 'Description', 'trim|required');
         $this->form_validation->set_rules('channel', 'Channel', 'trim|required');
+        $this->form_validation->set_rules('publishingdate', 'Publishing Date', 'required');
 
         if ($this->form_validation->run() == FALSE) {
 
-            $data['channels'] = $this->post->get_one_items('channel','status',1);
-
+            $data['channels'] = $this->channel;
+            $data['tags'] = $this->tags ;
             $data['page'] = 'posts/edit';
             $data['post'] = '';
             $this->load->view('user/page', $data);
 
         } else {
-            $title = $this->input->post('title');
-            $description = $this->input->post('description');
-            $channel = $this->input->post('channel');
-            $checked = $this->input->post('status');
-            if(isset($checked) == 1)  { $status = 1 ;  } else { $status = 0; }
+
+
             $tagarr = $this->input->post('tag');
             $tags='';
             if(sizeof($tagarr)>1)
@@ -207,21 +205,22 @@ class Posts extends CI_Controller
                 }
             }
 
-
             $data = array(
-                'title' => $title,
-                'description' => $description,
-                'channelid' => $channel,
-                'status' => $status,
+                'title' => $this->input->post('title'),
+                'description' => $this->input->post('description'),
+                'channelid' =>$this->input->post('channel'),
+                'publishdate' => $this->input->post('publishingdate'),
                 'tags' =>$tags,
             );
+
             $flag = $this->post->update_one_item($id, 'id', 'posts', $data);
+
             if ($flag) {
                 $this->session->set_flashdata('toast_success', 'Post Updated Successfully  !!!');
-                redirect('user');
+                redirect('user/show');
             } else {
                 $this->session->set_flashdata('toast_error', 'Failed. Try Again !!!');
-                redirect('posts/edit/' . $id);
+                redirect('user/show');
             }
         }
     }
@@ -236,7 +235,7 @@ class Posts extends CI_Controller
         }
         $this->post->delete($slug,'slug','posts');
 
-        redirect('user');
+        redirect('user/show');
     }
 
     public function changeStatus($id)
@@ -260,30 +259,42 @@ class Posts extends CI_Controller
 
     public function show($field,$value)
     {
-        $date = mdate('%Y-%m-%d', now());
+        $date = $this->date;
 
         if($field == 'auther'){
-            $data["posts"] = $this->post->get_one_items('posts','userid',$value);
-        }
-        if($field == 'channel'){
-            if($this->session->userdata('userid') != ""){
-                $data["posts"] = $this->post->get_two_items('posts','channelid',$value,'userid',$this->session->userdata('userid'));
+
+           if($this->session->userdata('userid') != ""){
+               $data["posts"] = $this->post->get_one_items('posts','userid',$value);
             }
             else{
-                $data["posts"] = $this->post->get_one_items('posts','channelid',$value);
-                $data["posts"] = $this->post->get_two_item_less_equal('posts','status',1,'channelid',$value,'publishdate',$date);
+                $data["posts"] = $this->post->get_two_items_less_equal('posts','userid',$value,'status',1,'publishdate',$date);
             }
         }
+
+        if($field == 'channel'){
+            if($this->session->userdata('usertype') == 2){
+                $data["posts"] = $this->post->get_two_items('posts','channelid',$value,'userid',$this->session->userdata('userid'));
+            }
+            elseif($this->session->userdata('usertype') == 1){
+                $data["posts"] = $this->post->get_one_items('posts','channelid',$value);
+            }
+            else{
+                $data["posts"] = $this->post->get_two_items_less_equal('posts','channelid',$value,'status',1,'publishdate',$date);
+            }
+        }
+
         if($field == 'tags'){
 
             $tag = $this->post->get_one_item('tags','name',$value);
 
-            if($this->session->userdata('userid') != ""){
+            if($this->session->userdata('usertype') == 2){
                 $data["posts"] = $this->post->get_one_items_like('posts','tags',$tag->id,'userid',$this->session->userdata('userid'));
             }
+            elseif($this->session->userdata('usertype') == 1){
+                $data["posts"] = $this->post->get_items_like('posts','tags',$tag->id);
+            }
             else{
-                $data["posts"] = $this->post->get_one_item_items_like('posts','tags',$tag->id,'status',1,'publishdate',$date);
-
+                $data["posts"] = $this->post->get_one_items_less_equal_like('posts','tags',$tag->id,'status',1,'publishdate',$date);
             }
         }
 
@@ -292,6 +303,11 @@ class Posts extends CI_Controller
             $data["channel"][] = $this->post->get_one_item('channel','id',$val->channelid);
             $data["users"][] = $this->post->get_one_item('users','id',$val->userid);
             $tagss='';     $tag_array[]= '';
+
+            $favorite = $this->post->get_one_items('favourite','postid',$val->id);
+            $data["favourite"][] = sizeof($favorite);
+
+
             if(!empty($val->tags))
             {
                 $tagss=explode(',',$val->tags);
@@ -364,16 +380,16 @@ class Posts extends CI_Controller
                 $flag = $this->post->update_one_item($id, 'id', 'posts', $data);
                 if ($flag) {
                     $this->session->set_flashdata('toast_success', 'Post Updated Successfully  !!!');
-                    redirect('user');
+                    redirect('user/show');
                 } else {
                     $this->session->set_flashdata('toast_error', 'Failed. Try Again !!!');
-                    redirect('user');
+                    redirect('user/show');
                 }
 
             }
 
         }else{
-            redirect('user');
+            redirect('user/show');
         }
     }
 

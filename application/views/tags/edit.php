@@ -22,7 +22,7 @@
             <hr>
 
             <button type="submit" class="btn btn-primary">Update</button>
-            <a href="<?php echo base_url();?>channels" class="btn btn-light">Cancel</a>
+            <a href="<?php echo base_url();?>tags" class="btn btn-light">Cancel</a>
         </form>
   </div>
 </div>

@@ -7,6 +7,7 @@ class Auth extends CI_Controller
     public function  __construct()
     {
         parent::__construct();
+        $this->load->library('bcrypt');
     }
 
     public function index(){
@@ -31,7 +32,7 @@ class Auth extends CI_Controller
         }else {
 
                 $email = $this->input->post('email');
-                $password = md5($this->input->post('password'));
+                $password = $this->bcrypt->hash_password(($this->input->post('password')));
                 $signindata = $this->auth_model->get_two_item('users','email',$email,'password',$password);
 
                 if($signindata) {

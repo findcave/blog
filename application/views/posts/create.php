@@ -55,7 +55,7 @@
             <div class="form-group">
                 <label for="publishingdate">Publishing Date</label>
                 <div class='input-group date' >
-                    <input type='date' class="form-control" name="publishingdate" <?php echo set_value('publishingdate') ;?> />
+                    <input type='date' class="form-control" name="publishingdate" value="<?php echo set_value('publishingdate') ;?>"/>
                     <span class="text-danger"> <?php echo form_error('publishingdate'); ?> </span>
                 </div>
             </div>
@@ -64,13 +64,6 @@
                 <label for="pic">Image</label>
                 <input type='file' id="pic" class="form-control" accept="image/*" name="pic"/>
                 <span class="text-danger"></span>
-            </div>
-
-            <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="status" name="status">
-                  <label class="form-check-label" for="status">
-                    Active ?
-                  </label>
             </div>
 
             <hr>

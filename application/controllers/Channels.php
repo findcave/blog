@@ -27,7 +27,7 @@ class Channels extends CI_Controller
 
     public function store()
     {
-        $this->form_validation->set_rules('name', 'Name', 'trim|required');
+        $this->form_validation->set_rules('name', 'Name', 'trim|required|is_unique[channel.name]');
         $this->form_validation->set_rules('description', 'Description', 'trim|required');
 
         if ($this->form_validation->run() == FALSE) {
@@ -67,7 +67,7 @@ class Channels extends CI_Controller
     {
          $id =  trim($this->security->xss_clean($this->input->post('id')));
 
-        $this->form_validation->set_rules('name', 'Name', 'trim|required');
+        $this->form_validation->set_rules('name', 'Name', 'trim|required|is_unique[channel.name]');
         $this->form_validation->set_rules('description', 'Description', 'trim|required');
         $this->form_validation->set_rules('id', 'ID', 'trim|required');
 

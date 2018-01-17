@@ -23,6 +23,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
             crossorigin="anonymous"></script>
 
+       <script src="https://use.fontawesome.com/b09ec1e50e.js"></script>
+
 
         <!-- Custom styles for this template -->
         <style rel="stylesheet">

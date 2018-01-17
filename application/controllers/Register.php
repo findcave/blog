@@ -3,6 +3,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Register extends CI_Controller {
 
+    public function  __construct()
+    {
+        parent::__construct();
+        $this->load->library('bcrypt');
+    }
+
+
     public function index()
     {
         $data['channels'] = $this->post->get_all_item('channel');
@@ -11,12 +18,14 @@ class Register extends CI_Controller {
         $this->load->view('page', $data);
     }
 
+
     public function store()
     {
         $this->form_validation->set_rules('name', 'Name', 'trim|required');
         $this->form_validation->set_rules('phone', 'Phone', 'trim|required|numeric');
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[users.email]');
         $this->form_validation->set_rules('password', 'Password', 'trim|required|max_length[8]');
+
 
         if($this->form_validation->run() == FALSE){
 
@@ -29,7 +38,7 @@ class Register extends CI_Controller {
                 'name' =>$this->input->post('name'),
                 'phone' =>$this->input->post('phone'),
                 'email' =>$this->input->post('email'),
-                'password' =>md5($this->input->post('password')),
+                'password' =>$this->bcrypt->hash_password($this->input->post('password')),
                 'usertype' =>2
             );
             $flag = $this->registration->item_insert('users', $datas);
