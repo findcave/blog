@@ -32,12 +32,6 @@
                         <button type="submit" class="btn btn-link btn-sm">Delete</button>
                     </form>
 
-                    <!--                    <form action="--><?php //echo base_url();?><!--channels/changeStatus/--><?php //echo $channel->id ;?><!--" method="post">-->
-                    <!--                        <input type="hidden" name="status" value="--><?php //echo $channel->status ;?><!--">-->
-                    <!--                        <button type="submit" class="btn btn-link btn-sm" >-->
-                    <!--                            --><?php //echo ($channel->status == 1) ? 'Deactivate' : 'Activate'; ?>
-                    <!--                        </button>-->
-                    <!--                    </form>-->
                     </div>
                 </td>
             </tr>

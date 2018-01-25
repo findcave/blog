@@ -8,7 +8,7 @@
 
 <div class="row">
   <div class="col">
-        <form name="registerform" action="<?php echo base_url(); ?>posts/store" method="post" >
+        <form name="registerform" action="<?php echo base_url(); ?>posts/store" method="post" enctype="multipart/form-data"  >
 
             <div class="form-group">
                 <label for="title">Name</label>
@@ -40,11 +40,30 @@
             </div>
 
             <div class="form-group">
+                <label for="channel">Tags</label>
+                <select  multiple='multiple'   class='js-example-basic-multiple control-group'
+                         tabindex='1'
+                         name='tag[]' id="multipleCast">
+                    <?php foreach($tags as $tag) {?>
+                        <option <?php echo set_select('tag', $tag->id); ?> value="<?php echo $tag->id; ?>"><?php echo $tag->name; ?></option>
+                    <?php }?>
+                </select>
+                <span style="color:#CC0000"> <?php echo form_error('tag[]'); ?> </span>
+            </div>
+
+
+            <div class="form-group">
                 <label for="publishingdate">Publishing Date</label>
                 <div class='input-group date' >
-                    <input type='date' class="form-control" name="publishingdate" />
+                    <input type='date' class="form-control" name="publishingdate" <?php echo set_value('publishingdate') ;?> />
                     <span class="text-danger"> <?php echo form_error('publishingdate'); ?> </span>
                 </div>
+            </div>
+
+            <div class="form-group">
+                <label for="pic">Image</label>
+                <input type='file' id="pic" class="form-control" accept="image/*" name="pic"/>
+                <span class="text-danger"></span>
             </div>
 
             <div class="form-check">
@@ -57,21 +76,25 @@
             <hr>
 
             <button type="submit" class="btn btn-primary add">Submit</button>
-            <a href="<?php echo base_url();?>posts" class="btn btn-light">Cancel</a>
+            <a href="<?php echo base_url();?>user" class="btn btn-light">Cancel</a>
         </form>
     </div>
 </div>
 
 
+<!--slug creation-->
 <script type="text/javascript">   
+    $(function() {
 
+       $("#title").change(function(){
+            $("#slug").val(slugify(this.value));
+        });
 
-$(function() {
-
-   $("#title").change(function(){
-        $("#slug").val(slugify(this.value));
     });
-   
-});
+</script>
 
+
+<!-- select 2 -->
+<script type="text/javascript">
+    $(".js-example-basic-multiple").select2();
 </script>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 09, 2018 at 05:09 PM
+-- Generation Time: Jan 25, 2018 at 07:50 AM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -42,7 +42,8 @@ INSERT INTO `channel` (`id`, `name`, `description`, `status`, `created_at`) VALU
 (1, 'php', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley', 1, '2018-01-09 14:10:08'),
 (2, 'Javascript', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley', 1, '2018-01-09 05:43:47'),
 (3, 'java', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley', 1, '2018-01-09 14:10:14'),
-(5, 'html', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley', 0, '2018-01-09 14:10:18');
+(5, 'html', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley', 1, '2018-01-11 11:04:15'),
+(6, 'vue', 'ver since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of', 0, '2018-01-24 14:36:03');
 
 -- --------------------------------------------------------
 
@@ -103,8 +104,11 @@ CREATE TABLE `posts` (
   `title` text NOT NULL,
   `description` text NOT NULL,
   `channelid` int(11) NOT NULL,
+  `userid` int(11) NOT NULL,
   `slug` text NOT NULL,
   `publishdate` datetime NOT NULL,
+  `tags` text NOT NULL,
+  `image` text NOT NULL,
   `status` tinyint(4) NOT NULL COMMENT '1 as active, 0 as inactive',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -113,9 +117,74 @@ CREATE TABLE `posts` (
 -- Dumping data for table `posts`
 --
 
-INSERT INTO `posts` (`id`, `title`, `description`, `channelid`, `slug`, `publishdate`, `status`, `created_at`) VALUES
-(1, 'SITEPOINT PHP', 'is a renowned name in the programming world for bringing valuable resources to coders. Be it how-to guides, courses or books; it is a treasure for learning PHP. Each post is manually reviewed by the Editor before it goes live. The posts on the website range from novice to the expert level. You will find articles on various topics related to PHP. Programmers across the world post their experiences of PHP,', 1, '', '0000-00-00 00:00:00', 1, '2018-01-09 14:35:36'),
-(2, 'html development', 'many of the features and topics that you might have missed when moving from HTML to HTML5. It also has a helpful element index that’s worth investigating in and of itself.', 5, '', '0000-00-00 00:00:00', 1, '2018-01-09 08:02:20');
+INSERT INTO `posts` (`id`, `title`, `description`, `channelid`, `userid`, `slug`, `publishdate`, `tags`, `image`, `status`, `created_at`) VALUES
+(6, 'Php Developemnt', 'Php  version since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of', 1, 4, 'php-developemnt', '2018-01-17 00:00:00', '', 'default.png', 0, '2018-01-24 19:09:48'),
+(7, 'designing methods', 'ver since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of', 5, 2, 'designing-methods', '2018-01-19 00:00:00', '', 'default.png', 1, '2018-01-24 19:09:38'),
+(8, 'designing bootsrtap', 'ver since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of', 5, 2, 'designing-bootsrtap', '2018-01-22 00:00:00', '', 'default.png', 0, '2018-01-24 19:09:50'),
+(9, 'Javascipt developemnt', 'ver since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of', 2, 3, 'javascipt-developemnt', '2018-01-09 00:00:00', '', 'default.png', 1, '2018-01-24 19:09:43'),
+(10, 'Css Styling', 'ver since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of', 5, 3, 'css-styling', '2018-01-25 00:00:00', '', 'default.png', 1, '2018-01-24 19:09:41'),
+(11, 'Java Development', 'JAva ver since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of', 3, 4, 'java-development', '2018-01-09 00:00:00', '', 'post_img_p32rrt.jpg', 1, '2018-01-24 19:35:53'),
+(13, 'bgcxg dfgdfg', 'dfg dfgdgdsg', 2, 4, 'bgcxg-dfgdfg', '2018-01-26 00:00:00', '', 'post_img_p32rs2.jpg', 1, '2018-01-24 19:36:02'),
+(15, 'yyy deve', 'dgfds dsfdsf', 1, 4, 'yyy-deve', '2018-01-26 00:00:00', '', 'default.png', 1, '2018-01-24 19:09:30'),
+(16, 'hfh fhdfhf', 'dfgdfg dfg', 2, 4, 'hfh-fhdfhf', '2018-01-26 00:00:00', '', 'default.png', 1, '2018-01-24 19:09:28'),
+(17, 'gdftgdfg dfgdfg', 'dfgdfg dfg', 2, 4, 'gdftgdfg-dfgdfg', '2018-01-26 00:00:00', '', 'default.png', 1, '2018-01-24 19:09:26'),
+(18, 'gf dfgdfg', 'fdgdfg', 5, 4, 'gf-dfgdfg', '2018-01-26 00:00:00', '', 'default.png', 0, '2018-01-24 19:09:24'),
+(19, 'gfhygf gfh', 'gfh', 1, 4, 'gfhygf-gfhgfhf', '2018-01-25 00:00:00', '', 'default.png', 0, '2018-01-24 19:09:21'),
+(20, 'ghkjghghhghj ghjgh', 'ghjghj', 5, 4, 'ghkjghghhghj-ghjgh', '2018-01-25 00:00:00', '', 'default.png', 0, '2018-01-24 19:09:19'),
+(21, 'nbmbv mbv', 'gfjgfj gfjgfj', 1, 4, 'nbmbv-mbv', '2018-01-26 00:00:00', '', 'post_img_p32q08.jpg', 0, '2018-01-24 18:57:44'),
+(22, 'cake php developemnt', 'zxcvxzxz asfasf asfasf asfasfasf d df gdfgdfg dfgdsg dgsdgd gdsgdsg dsgds gsdgsd gdsg dsgdsgdsgds dsgsdd\r\nhjdf dfyhdfhdfdfgdfgstewtew urturt', 1, 4, 'cake-php-developemnt', '2018-01-12 00:00:00', '4,5,6,7', 'post_img_p32vqc.jpg', 1, '2018-01-24 21:16:24');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tags`
+--
+
+CREATE TABLE `tags` (
+  `id` int(11) NOT NULL,
+  `name` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tags`
+--
+
+INSERT INTO `tags` (`id`, `name`, `created_at`) VALUES
+(2, 'web developmet', '2018-01-24 20:24:21'),
+(4, 'php', '2018-01-24 20:59:11'),
+(5, 'html', '2018-01-24 20:59:17'),
+(6, 'development', '2018-01-24 20:59:22'),
+(7, 'designing', '2018-01-24 20:59:29'),
+(8, 'java', '2018-01-24 20:59:42'),
+(9, 'javascript', '2018-01-24 20:59:49');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `name` varchar(60) NOT NULL,
+  `email` text NOT NULL,
+  `phone` text NOT NULL,
+  `password` text NOT NULL,
+  `usertype` smallint(6) NOT NULL COMMENT '1 as admin, 2 as user',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `email`, `phone`, `password`, `usertype`, `created_at`) VALUES
+(1, 'admin', 'admin@admin.com', '9544885554', '21232f297a57a5a743894a0e4a801fc3', 1, '2018-01-24 12:56:25'),
+(2, 'sarath', 'sarath@gmail.com', '9544885553', '202cb962ac59075b964b07152d234b70', 2, '2018-01-24 12:56:29'),
+(3, 'renish', 'renish@gmail.com', '9544885554', '202cb962ac59075b964b07152d234b70', 2, '2018-01-24 12:56:30'),
+(4, 'dhaya', 'dhayams01@gmail.com', '9544885554', '202cb962ac59075b964b07152d234b70', 2, '2018-01-25 06:49:49'),
+(7, 'priya', 'priya@gmail.com', '9544885554', '202cb962ac59075b964b07152d234b70', 2, '2018-01-25 06:37:34');
 
 --
 -- Indexes for dumped tables
@@ -146,6 +215,18 @@ ALTER TABLE `posts`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `tags`
+--
+ALTER TABLE `tags`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -153,12 +234,12 @@ ALTER TABLE `posts`
 -- AUTO_INCREMENT for table `channel`
 --
 ALTER TABLE `channel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `department`
 --
 ALTER TABLE `department`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `employee`
 --
@@ -168,7 +249,17 @@ ALTER TABLE `employee`
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+--
+-- AUTO_INCREMENT for table `tags`
+--
+ALTER TABLE `tags`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

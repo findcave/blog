@@ -7,8 +7,6 @@ class Channels extends CI_Controller
     public function  __construct()
     {
         parent::__construct();
-        $this->load->model('channel');
-
     }
 
     public function index()
@@ -17,7 +15,6 @@ class Channels extends CI_Controller
 
         $data['page'] = 'channels/index';
         $this->load->view('channels/page', $data);
-
 
     }
 
@@ -38,25 +35,17 @@ class Channels extends CI_Controller
             $data['page'] = 'channels/create';
             $this->load->view('channels/page', $data);
 
-        } else {
-            $name = trim($this->security->xss_clean($this->input->post('name')));
-            $description = trim($this->security->xss_clean($this->input->post('description')));
+        }else {
             $checked = $this->input->post('status');
+            if(isset($checked) == 1) { $status = 1; } else { $status = 0; }
 
-            if(isset($checked) == 1)
-            {
-                $status = 1 ;
-            }
-            else
-            {
-                $status = 0 ;
-            }
             $datas = array(
-                'name' => $name,
-                'description' => $description,
+                'name' => $this->input->post('name'),
+                'description' =>$this->input->post('description'),
                 'status' => $status,
             );
             $flag = $this->channel->item_insert('channel', $datas);
+
             if ($flag) {
                 $this->session->set_flashdata('toast_success', 'Channel Added Successfully  !!!');
                 redirect('channels');
@@ -90,13 +79,11 @@ class Channels extends CI_Controller
 
         }
         else {
-            $name = trim($this->security->xss_clean($this->input->post('name')));
-            $description = trim($this->security->xss_clean($this->input->post('description')));
             $checked = $this->input->post('status');
             if(isset($checked) == 1) {  $status = 1 ; } else { $status = 0 ;   }
             $data = array(
-                'name' => $name,
-                'description' => $description,
+                'name' => $this->input->post('name'),
+                'description' => $this->input->post('description'),
                 'status' => $status,
             );
             $flag = $this->channel->update_one_item($id, 'id', 'channel', $data);
@@ -112,21 +99,14 @@ class Channels extends CI_Controller
 
     public function destroy($id)
     {
-        $this->channel->delete($id, 'channel');
+        $this->channel->delete($id,'id','channel');
         redirect('channels');
     }
 
     public function changeStatus($id)
     {
         $status = $this->input->post('status');
-        if($status == 1)
-        {
-           $data = array('status'=>0) ;
-        }
-        else
-        {
-            $data = array('status'=>1) ;
-        }
+        if($status == 1) { $data = array('status'=>0) ; } else { $data = array('status'=>1) ; }
 
         $flag = $this->channel->update_one_item($id, 'id', 'channel', $data);
 
